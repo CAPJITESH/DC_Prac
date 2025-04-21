@@ -10,9 +10,8 @@
 9. Agar average skew positive hai toh machine ka time ghatao, negative hai toh badhao  
 10. Final adjusted time print karo for synchronization
 '''
-
 from datetime import timedelta
-from tabulate import tabulate
+
 num = {'00':0,'01':1,'02':2,'03':3,'04':4,'05':5,'06':6,'07':7,'08':8,'09':9}
 
 curr_time = {}
@@ -41,7 +40,6 @@ def calcSkew():
             print("\nMessage sent by Machine {}".format(t))
 
 def calcSync(avg,m):
-
     abs_avg = abs(avg)
     print('Current Time of Machine {}: {}'.format(m,curr_time[m]))
 
@@ -51,6 +49,12 @@ def calcSync(avg,m):
     else:
         new_time = curr_time[m] + timedelta(minutes=abs_avg)
         print('Hence increases its clock by {} to get time:{} '.format(abs_avg, str(new_time)))
+
+def printTable():
+    print("\n" + "-" * 50)
+    for i in range(len(machines)):
+        print(f"{str(machines[i]):<10} | {str(curr_time_lst[i]):<20} | {str(skew_lst[i]):<10}")
+    print("-" * 50)
 
 ag_time = input("Enter Agreed Upon Time: ")
 n = int(input("Enter no. of machines: "))
@@ -66,7 +70,7 @@ for i in range(0,n):
 
 print('\nAgreed Upon Time: ',str(ag_time))
 calcSkew()
-print(tabulate([machines,curr_time_lst,skew_lst],tablefmt="grid"))
+printTable()
 
 counter = 1
 
@@ -80,7 +84,7 @@ while counter != n:
         curr_time_lst.append(curr_time[t])
 
     calcSkew()
-    print(tabulate([machines,curr_time_lst,skew_lst],tablefmt="grid"))
+    printTable()
 
     counter+=1
 
